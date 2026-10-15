@@ -99,14 +99,14 @@ export default function HomePage() {
             ) : (
               <>
                 <Link
-                  href="/register"
+                  href="/auth/register"
                   className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/30 hover:from-indigo-500 hover:to-indigo-400 transition transform hover:-translate-y-0.5"
                 >
                   <span>Get Started Free</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/login"
+                  href="/auth/login"
                   className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/90 px-6 py-3.5 text-sm font-semibold text-slate-200 hover:bg-slate-800 hover:text-white transition transform hover:-translate-y-0.5"
                 >
                   <span>Sign In</span>

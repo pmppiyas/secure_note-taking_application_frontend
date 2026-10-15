@@ -30,7 +30,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#030712] text-slate-100 relative">
+      <body className="min-h-full flex flex-col bg-[#030712] text-slate-100 relative overflow-x-hidden">
         {/* Unified ambient background glow behind both Navbar and Hero */}
         <div className="fixed inset-0 -z-10 bg-[#030712] pointer-events-none">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(99,102,241,0.2),rgba(3,7,18,0))] pointer-events-none" />
@@ -39,7 +39,7 @@ export default function RootLayout({
         <ReduxProvider>
           <Suspense fallback={null}>
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pt-16">{children}</main>
           </Suspense>
         </ReduxProvider>
       </body>

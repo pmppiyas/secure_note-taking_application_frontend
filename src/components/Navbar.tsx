@@ -23,7 +23,9 @@ export default function Navbar() {
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<'home' | 'feed' | null>('home');
+  const [activeSection, setActiveSection] = useState<'home' | 'feed' | null>(
+    'home'
+  );
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -55,7 +57,7 @@ export default function Navbar() {
   const handleLogout = () => {
     dispatch(logout());
     setMobileMenuOpen(false);
-    router.push('/login');
+    router.push('/auth/login');
   };
 
   const closeMobile = () => setMobileMenuOpen(false);
@@ -64,13 +66,7 @@ export default function Navbar() {
   const isHomeActive = pathname === '/' && activeSection === 'home';
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
-        isScrolled
-          ? 'bg-[#030712]/85 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/30'
-          : 'bg-transparent border-b border-transparent'
-      }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-[#030712]/90 backdrop-blur-xl border-b border-white/10 shadow-md shadow-black/30 transition-all duration-200">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
         <Link
@@ -116,28 +112,17 @@ export default function Navbar() {
           {/* Authenticated Links */}
           {isAuthenticated && (
             <>
-              <Link
-                href="/notes"
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-150 ${
-                  pathname === '/notes'
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/40'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                My Notes
-              </Link>
-
-              {user?.role === 'ADMIN' && (
+              {user?.role === 'ADMIN' ? (
                 <>
                   <Link
-                    href="/admin"
+                    href="/admin/dashboard"
                     className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-150 ${
-                      pathname === '/admin'
+                      pathname?.startsWith('/admin/dashboard')
                         ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/40'
                         : 'text-slate-300 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    Admin Panel
+                    Admin Dashboard
                   </Link>
 
                   <Link
@@ -152,6 +137,17 @@ export default function Navbar() {
                     <span>Interests (S1)</span>
                   </Link>
                 </>
+              ) : (
+                <Link
+                  href="/dashboard"
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-150 ${
+                    pathname === '/dashboard'
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/40'
+                      : 'text-slate-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  Dashboard
+                </Link>
               )}
             </>
           )}
@@ -192,14 +188,14 @@ export default function Navbar() {
           ) : (
             <div className="flex items-center gap-2.5">
               <Link
-                href="/login"
+                href="/auth/login"
                 className="flex items-center gap-1.5 rounded-full border border-white/15 bg-slate-900/80 px-4 py-1.5 text-xs font-bold text-slate-200 hover:bg-white/10 hover:text-white transition backdrop-blur-sm"
               >
                 <LogIn className="h-3.5 w-3.5 text-slate-400" />
                 <span>Login</span>
               </Link>
               <Link
-                href="/register"
+                href="/auth/register"
                 className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 px-5 py-1.5 text-xs font-bold text-white shadow-md shadow-indigo-600/35 hover:from-indigo-500 hover:to-indigo-400 transition"
               >
                 <UserPlus className="h-3.5 w-3.5" />
@@ -267,34 +263,19 @@ export default function Navbar() {
 
             {isAuthenticated ? (
               <>
-                <Link
-                  href="/notes"
-                  onClick={closeMobile}
-                  className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-bold transition ${
-                    pathname === '/notes'
-                      ? 'bg-indigo-600 text-white'
-                      : 'text-slate-300 hover:bg-slate-900'
-                  }`}
-                >
-                  <span>My Notes</span>
-                  {pathname === '/notes' && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                  )}
-                </Link>
-
-                {user?.role === 'ADMIN' && (
+                {user?.role === 'ADMIN' ? (
                   <>
                     <Link
-                      href="/admin"
+                      href="/admin/dashboard"
                       onClick={closeMobile}
                       className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-bold transition ${
-                        pathname === '/admin'
+                        pathname?.startsWith('/admin/dashboard')
                           ? 'bg-indigo-600 text-white'
                           : 'text-slate-300 hover:bg-slate-900'
                       }`}
                     >
-                      <span>Admin Panel</span>
-                      {pathname === '/admin' && (
+                      <span>Admin Dashboard</span>
+                      {pathname?.startsWith('/admin/dashboard') && (
                         <span className="h-1.5 w-1.5 rounded-full bg-white" />
                       )}
                     </Link>
@@ -312,6 +293,21 @@ export default function Navbar() {
                       <Sparkles className="h-3.5 w-3.5 text-amber-400" />
                     </Link>
                   </>
+                ) : (
+                  <Link
+                    href="/dashboard"
+                    onClick={closeMobile}
+                    className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-bold transition ${
+                      pathname === '/dashboard'
+                        ? 'bg-indigo-600 text-white'
+                        : 'text-slate-300 hover:bg-slate-900'
+                    }`}
+                  >
+                    <span>Dashboard</span>
+                    {pathname === '/dashboard' && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                    )}
+                  </Link>
                 )}
 
                 <div className="mt-3 border-t border-white/10 pt-3">
@@ -341,7 +337,7 @@ export default function Navbar() {
             ) : (
               <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3">
                 <Link
-                  href="/login"
+                  href="/auth/login"
                   onClick={closeMobile}
                   className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-slate-900 px-4 py-2.5 text-xs font-bold text-slate-200 hover:bg-slate-800"
                 >
@@ -349,7 +345,7 @@ export default function Navbar() {
                   <span>Login</span>
                 </Link>
                 <Link
-                  href="/register"
+                  href="/auth/register"
                   onClick={closeMobile}
                   className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 shadow-md shadow-indigo-600/30"
                 >

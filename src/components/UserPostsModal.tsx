@@ -1,24 +1,18 @@
 'use client';
 
-import React from 'react';
 import { useGetUserPostsLookupQuery } from '@/redux/api/postApi';
 import { Post } from '@/types';
-import {
-  X,
-  Mail,
-  Tag,
-  FileText,
-  Clock,
-  Sparkles,
-  Loader2,
-} from 'lucide-react';
+import { X, Mail, Tag, FileText, Clock, Sparkles, Loader2 } from 'lucide-react';
 
 export interface UserPostsModalProps {
   userId: string | null;
   onClose: () => void;
 }
 
-export default function UserPostsModal({ userId, onClose }: UserPostsModalProps) {
+export default function UserPostsModal({
+  userId,
+  onClose,
+}: UserPostsModalProps) {
   const { data, isLoading, isError } = useGetUserPostsLookupQuery(
     userId || '',
     {
@@ -40,9 +34,12 @@ export default function UserPostsModal({ userId, onClose }: UserPostsModalProps)
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">User & Posts ($lookup)</h3>
+              <h3 className="text-lg font-bold text-white">
+                User & Posts ($lookup)
+              </h3>
               <p className="text-xs text-slate-400">
-                Single MongoDB aggregation pipeline with Stage 2: <code className="text-indigo-400">$lookup</code>
+                Single MongoDB aggregation pipeline with Stage 2:{' '}
+                <code className="text-indigo-400">$lookup</code>
               </p>
             </div>
           </div>
@@ -77,7 +74,9 @@ export default function UserPostsModal({ userId, onClose }: UserPostsModalProps)
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <h4 className="text-base font-bold text-white">{user.name}</h4>
+                      <h4 className="text-base font-bold text-white">
+                        {user.name}
+                      </h4>
                       <p className="text-xs text-slate-400 flex items-center gap-1.5">
                         <Mail className="h-3 w-3" />
                         {user.email}
@@ -142,13 +141,16 @@ export default function UserPostsModal({ userId, onClose }: UserPostsModalProps)
                         <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
                           <Clock className="h-3 w-3" />
                           <span>
-                            {new Date(post.createdAt).toLocaleDateString(undefined, {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
+                            {new Date(post.createdAt).toLocaleDateString(
+                              undefined,
+                              {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              }
+                            )}
                           </span>
                         </div>
                       </div>
