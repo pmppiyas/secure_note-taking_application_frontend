@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function AdminAllNotesPage() {
   return (
-    <div className="flex-1 flex flex-col space-y-4">
+    <div className="space-y-6">
       {/* Page Header */}
       <PageHeader
         icon={ShieldCheck}

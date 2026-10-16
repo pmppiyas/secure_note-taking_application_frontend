@@ -23,9 +23,16 @@ export default function Navbar() {
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const isAuth = mounted && isAuthenticated;
+
   const [activeSection, setActiveSection] = useState<'home' | 'feed' | null>(
     'home'
   );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -57,7 +64,7 @@ export default function Navbar() {
   const handleLogout = () => {
     dispatch(logout());
     setMobileMenuOpen(false);
-    router.push('/auth/login');
+    router.push('/');
   };
 
   const closeMobile = () => setMobileMenuOpen(false);
@@ -110,7 +117,7 @@ export default function Navbar() {
           </Link>
 
           {/* Authenticated Links */}
-          {isAuthenticated && (
+          {isAuth && (
             <>
               {user?.role === 'ADMIN' ? (
                 <>
@@ -155,7 +162,7 @@ export default function Navbar() {
 
         {/* Desktop Auth Section */}
         <div className="hidden md:flex items-center gap-3">
-          {isAuthenticated && user ? (
+          {isAuth && user ? (
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-slate-900/80 py-1.5 pl-3 pr-4 shadow-sm backdrop-blur-sm">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
@@ -261,7 +268,7 @@ export default function Navbar() {
               )}
             </Link>
 
-            {isAuthenticated ? (
+            {isAuth ? (
               <>
                 {user?.role === 'ADMIN' ? (
                   <>

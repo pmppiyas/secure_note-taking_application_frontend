@@ -58,10 +58,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { user } = useAppSelector((state) => state.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const isAdmin = user?.role?.toLowerCase() === 'admin';
+  const isAdmin =
+    user?.role?.toLowerCase() === 'admin' || pathname?.startsWith('/admin');
 
-  // Import navigation items dynamically by user role
-  const navItems: NavItem[] = getRoutesByRole(user?.role);
+  // Import navigation items dynamically by user role or route prefix
+  const navItems: NavItem[] = getRoutesByRole(
+    user?.role || (pathname?.startsWith('/admin') ? 'ADMIN' : 'USER')
+  );
 
   // Derive current page title from active route
   const currentRoute = navItems.find((item) => item.href === pathname);
@@ -72,7 +75,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     dispatch(logout());
     Cookies.remove('token');
     Cookies.remove('role');
-    router.push('/login');
+    router.push('/');
   };
 
   return (
@@ -107,7 +110,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   <span className="text-sm font-extrabold bg-gradient-to-r from-white via-indigo-100 to-slate-200 bg-clip-text text-transparent truncate">
                     Secure Notes
                   </span>
-                  <span className="text-[10px] text-slate-400 truncate">
+                  <span
+                    suppressHydrationWarning
+                    className="text-[10px] text-slate-400 truncate"
+                  >
                     {isAdmin ? 'Admin Governance' : 'Encrypted Vault'}
                   </span>
                 </div>
@@ -161,7 +167,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               <div>
                 <div className="px-3 pb-2 text-[10px] font-bold tracking-wider uppercase text-slate-400 flex items-center gap-1.5">
                   <Sparkles className="w-3 h-3 text-indigo-400" />
-                  <span>{isAdmin ? 'Admin Navigation' : 'My Workspace'}</span>
+                  <span suppressHydrationWarning>
+                    {isAdmin ? 'Admin Navigation' : 'My Workspace'}
+                  </span>
                 </div>
                 <nav className="space-y-1">
                   {navItems.map((item: NavItem) => {
@@ -252,13 +260,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     <Menu className="w-5 h-5" />
                   </button>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-white tracking-tight">
+                    <span
+                      suppressHydrationWarning
+                      className="text-sm font-bold text-white tracking-tight"
+                    >
                       {isAdmin ? 'Admin Governance' : 'User Vault'}
                     </span>
                     <span className="text-slate-500 text-xs hidden sm:inline">
                       •
                     </span>
-                    <span className="text-xs text-slate-400 capitalize hidden sm:inline">
+                    <span
+                      suppressHydrationWarning
+                      className="text-xs text-slate-400 capitalize hidden sm:inline"
+                    >
                       {currentTitle}
                     </span>
                   </div>

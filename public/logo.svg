@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4338ca" />
+      <stop offset="40%" stop-color="#4f46e5" />
+      <stop offset="75%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#22d3ee" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#4f46e5" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base with Gradient -->
+  <rect x="24" y="24" width="464" height="464" rx="116" fill="url(#brandGrad)" />
+  
+  <!-- Subtle Highlight Border -->
+  <rect x="24" y="24" width="464" height="464" rx="116" fill="none" stroke="rgba(255, 255, 255, 0.25)" stroke-width="4" />
+
+  <!-- ShieldCheck Lucide Icon (Centered & Scaled) -->
+  <g transform="translate(120, 120) scale(11.333)" stroke="#ffffff" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+    <path d="m9 12 2 2 4-4" />
+  </g>
+</svg>

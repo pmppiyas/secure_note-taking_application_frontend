@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAppSelector } from '@/redux/hooks';
 import { useGetAllPostsQuery } from '@/redux/api/postApi';
@@ -28,8 +28,14 @@ export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const isAuth = mounted && isAuthenticated;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const {
     data: postsResponse,
@@ -85,7 +91,7 @@ export default function HomePage() {
 
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            {isAuthenticated ? (
+            {isAuth ? (
               <>
                 <Link
                   href="/dashboard/my-notes"
@@ -207,7 +213,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            {isAuthenticated && (
+            {isAuth && (
               <button
                 onClick={() => setIsCreatePostOpen(true)}
                 className="self-start sm:self-auto flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-indigo-500 transition shadow-md shadow-indigo-600/20"
@@ -250,7 +256,7 @@ export default function HomePage() {
               <p className="text-xs text-slate-400 mt-1 mb-5">
                 Be the first to publish a post to the community feed.
               </p>
-              {isAuthenticated ? (
+              {isAuth ? (
                 <button
                   onClick={() => setIsCreatePostOpen(true)}
                   className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500 transition"
