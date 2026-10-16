@@ -95,7 +95,9 @@ export default function AdminMyNotesPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Personal Vault Total</span>
+            <span className="text-xs font-medium text-slate-400">
+              Personal Vault Total
+            </span>
             <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
               <FileText className="w-4 h-4" />
             </div>
@@ -105,7 +107,9 @@ export default function AdminMyNotesPage() {
               {meta.total} {meta.total === 1 ? 'Note' : 'Notes'}
             </span>
             <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
-              <span className="text-emerald-400 font-medium">Compound Indexed</span>
+              <span className="text-emerald-400 font-medium">
+                Compound Indexed
+              </span>
               <span>• {`{ userId: 1, createdAt: -1 }`}</span>
             </p>
           </div>
@@ -113,7 +117,9 @@ export default function AdminMyNotesPage() {
 
         <div className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Current Scope</span>
+            <span className="text-xs font-medium text-slate-400">
+              Current Scope
+            </span>
             <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <Lock className="w-4 h-4" />
             </div>
@@ -130,7 +136,9 @@ export default function AdminMyNotesPage() {
 
         <div className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Privilege Level</span>
+            <span className="text-xs font-medium text-slate-400">
+              Privilege Level
+            </span>
             <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
               <Shield className="w-4 h-4" />
             </div>
@@ -223,7 +231,9 @@ export default function AdminMyNotesPage() {
               <Inbox className="w-7 h-7" />
             </div>
             <h3 className="text-base font-semibold text-white">
-              {searchQuery ? 'No matching notes found' : 'No personal notes created yet'}
+              {searchQuery
+                ? 'No matching notes found'
+                : 'No personal notes created yet'}
             </h3>
             <p className="text-xs text-slate-400 max-w-sm mt-1 leading-relaxed">
               {searchQuery

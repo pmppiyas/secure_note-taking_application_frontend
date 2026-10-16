@@ -121,7 +121,9 @@ export default function ViewNoteModal({
                   <User className="w-3.5 h-3.5" />
                 </div>
                 <div>
-                  <span className="font-semibold text-white">{author.name}</span>
+                  <span className="font-semibold text-white">
+                    {author.name}
+                  </span>
                   <span className="text-slate-400 ml-2">({author.email})</span>
                 </div>
               </div>
@@ -134,24 +136,6 @@ export default function ViewNoteModal({
           {/* Main content */}
           <div className="p-4 rounded-xl bg-slate-950/80 border border-white/10 text-slate-200 text-sm leading-relaxed whitespace-pre-wrap font-sans select-text">
             {note.content}
-          </div>
-
-          {/* Security & Indexing telemetry */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div className="p-3 rounded-xl bg-slate-900/70 border border-white/10">
-              <span className="text-[11px] text-slate-500 block mb-1">Index Spec (ESR)</span>
-              <div className="flex items-center gap-1.5 text-indigo-300 font-mono text-[11px]">
-                <Lock className="w-3 h-3 text-indigo-400 flex-shrink-0" />
-                <code>{`{ userId: 1, createdAt: -1 }`}</code>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-slate-900/70 border border-white/10">
-              <span className="text-[11px] text-slate-500 block mb-1">Record ID</span>
-              <code className="text-slate-300 font-mono text-[11px] truncate block">
-                {note._id}
-              </code>
-            </div>
           </div>
         </div>
 

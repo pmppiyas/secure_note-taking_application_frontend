@@ -126,9 +126,9 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/admin/interests"
+                    href="/admin/dashboard/interests-analytics"
                     className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-150 ${
-                      pathname === '/admin/interests'
+                      pathname === '/admin/dashboard/interests-analytics'
                         ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/40 font-extrabold'
                         : 'text-amber-400 hover:text-amber-300 hover:bg-amber-500/10'
                     }`}
@@ -281,10 +281,10 @@ export default function Navbar() {
                     </Link>
 
                     <Link
-                      href="/admin/interests"
+                      href="/admin/dashboard/interests-analytics"
                       onClick={closeMobile}
                       className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-bold transition ${
-                        pathname === '/admin/interests'
+                        pathname === '/admin/dashboard/interests-analytics'
                           ? 'bg-amber-500 text-slate-950 font-extrabold'
                           : 'text-amber-400 hover:bg-slate-900'
                       }`}

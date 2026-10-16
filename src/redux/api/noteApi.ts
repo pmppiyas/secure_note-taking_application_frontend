@@ -48,6 +48,27 @@ export const noteApi = apiSlice.injectEndpoints({
           : [{ type: 'Note', id: 'ADMIN_LIST' }],
     }),
 
+    // Admin alias matching spec requirement: getAllNotesForAdmin
+    getAllNotesForAdmin: builder.query<
+      ApiResponse<Note[]>,
+      GetNotesQueryParams | void
+    >({
+      query: (params) => ({
+        url: '/notes/all',
+        params: params || undefined,
+      }),
+      providesTags: (result) =>
+        result?.data
+          ? [
+              ...result.data.map(({ _id }) => ({
+                type: 'Note' as const,
+                id: _id,
+              })),
+              { type: 'Note', id: 'ADMIN_LIST' },
+            ]
+          : [{ type: 'Note', id: 'ADMIN_LIST' }],
+    }),
+
     // Get single note by ID
     getNoteById: builder.query<ApiResponse<Note>, string>({
       query: (id) => ({
@@ -107,6 +128,7 @@ export const noteApi = apiSlice.injectEndpoints({
 export const {
   useGetMyNotesQuery,
   useGetAllNotesAdminQuery,
+  useGetAllNotesForAdminQuery,
   useGetNoteByIdQuery,
   useCreateNoteMutation,
   useUpdateNoteMutation,

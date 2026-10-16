@@ -289,8 +289,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </header>
 
             {/* Main Content: ONLY this container scrolls when content overflows */}
-            <main className="flex-1 overflow-y-auto pt-4 px-4 sm:px-6 lg:px-8 pb-16 focus:outline-none">
-              <div className="w-full space-y-6">{children}</div>
+            <main className="flex-1 flex flex-col overflow-y-auto pt-4 px-4 sm:px-6 lg:px-8 pb-6 focus:outline-none">
+              <div className="w-full flex-1 flex flex-col space-y-5">{children}</div>
             </main>
           </div>
         </div>

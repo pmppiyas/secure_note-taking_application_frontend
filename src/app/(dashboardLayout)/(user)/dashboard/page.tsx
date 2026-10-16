@@ -22,7 +22,12 @@ export default function UserOverviewPage() {
   const { user } = useAppSelector((state) => state.auth);
 
   // Fetch unified dashboard telemetry from dedicated /api/v1/metadata backend route
-  const { data: metadataResponse } = useGetDashboardMetadataQuery();
+  const { data: metadataResponse, isLoading } = useGetDashboardMetadataQuery(
+    undefined,
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
   const metadata = metadataResponse?.data;
 
   // 1. My Notes count
@@ -38,7 +43,7 @@ export default function UserOverviewPage() {
   const interestsCount = metadata?.interestsCount ?? (user?.interests?.length || 0);
 
   return (
-    <div className="space-y-6">
+    <div className="flex-1 flex flex-col space-y-5">
       {/* Shared Compact Page Header */}
       <PageHeader
         icon={LayoutDashboard}

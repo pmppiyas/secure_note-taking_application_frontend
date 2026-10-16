@@ -18,6 +18,29 @@ export interface User {
   updatedAt?: string;
 }
 
+export interface CreateUserPayload {
+  name: string;
+  email: string;
+  password?: string;
+  role?: UserRole;
+  interests?: string[];
+}
+
+export interface UpdateUserPayload {
+  id: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: UserRole;
+  interests?: string[];
+}
+
+export interface GetUsersQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
 export interface Note {
   _id: string;
   title: string;
@@ -99,4 +122,5 @@ export interface DashboardMetadata {
   interests: string[];
   totalNotesCount?: number;
   totalUsersCount?: number;
+  totalCategoriesCount?: number;
 }
