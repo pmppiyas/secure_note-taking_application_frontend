@@ -72,7 +72,7 @@ export default function LoginPage() {
 
         const role = (res.data.user.role || '').toUpperCase();
         if (role === 'ADMIN') {
-          router.push('/admin/dashboard/');
+          router.push('/admin/dashboard');
         } else {
           router.push('/dashboard');
         }
@@ -94,13 +94,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] w-full overflow-hidden bg-gradient-to-br from-[#060919] via-[#090d26] to-[#040612] flex flex-col lg:flex-row text-slate-100 relative">
+    <div className="min-h-[calc(100vh-4rem)] w-full overflow-hidden bg-gradient-to-br from-[#060919] via-[#090d26] to-[#040612] flex flex-col text-slate-100 relative">
       {/* Ambient background glows constrained within container */}
       <div className="absolute top-1/4 left-1/4 w-72 h-72 lg:w-96 lg:h-96 bg-indigo-500/15 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-72 h-72 lg:w-96 lg:h-96 bg-violet-600/15 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* LEFT PANEL: Hidden on mobile, visible on desktop split-screen */}
-      <div className="hidden lg:flex lg:w-1/2 p-8 lg:p-14 flex-col justify-center relative z-10">
+      <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] w-full flex-1 flex flex-col lg:flex-row">
+        {/* LEFT PANEL: Hidden on mobile, visible on desktop split-screen */}
+        <div className="hidden lg:flex lg:w-1/2 p-8 lg:p-14 flex-col justify-center relative z-10">
         <div className="max-w-md mx-auto lg:mx-0 space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-[11px] font-semibold backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
@@ -306,5 +307,6 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }

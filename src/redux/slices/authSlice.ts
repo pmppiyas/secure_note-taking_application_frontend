@@ -24,6 +24,10 @@ const getInitialAuth = (): AuthState => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       user = JSON.parse(storedUser);
+      // Ensure role cookie is synchronized if user exists in storage
+      if (user?.role && !Cookies.get('role')) {
+        Cookies.set('role', user.role, { expires: 7, sameSite: 'lax' });
+      }
     }
   } catch (err) {
     console.error('Error parsing stored user:', err);
@@ -54,6 +58,9 @@ export const authSlice = createSlice({
 
       if (typeof window !== 'undefined') {
         Cookies.set('token', token, { expires: 7, sameSite: 'lax' });
+        if (user.role) {
+          Cookies.set('role', user.role, { expires: 7, sameSite: 'lax' });
+        }
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
       }
@@ -61,6 +68,12 @@ export const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
       if (typeof window !== 'undefined') {
+        if (action.payload.role) {
+          Cookies.set('role', action.payload.role, {
+            expires: 7,
+            sameSite: 'lax',
+          });
+        }
         localStorage.setItem('user', JSON.stringify(action.payload));
       }
     },
@@ -71,6 +84,7 @@ export const authSlice = createSlice({
 
       if (typeof window !== 'undefined') {
         Cookies.remove('token');
+        Cookies.remove('role');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
       }

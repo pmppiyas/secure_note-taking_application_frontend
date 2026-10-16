@@ -67,7 +67,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-[#030712]/90 backdrop-blur-xl border-b border-white/10 shadow-md shadow-black/30 transition-all duration-200">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl 2xl:max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
         <Link
           href="/"
@@ -141,7 +141,7 @@ export default function Navbar() {
                 <Link
                   href="/dashboard"
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-150 ${
-                    pathname === '/dashboard'
+                    pathname?.startsWith('/dashboard')
                       ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/40'
                       : 'text-slate-300 hover:text-white hover:bg-white/10'
                   }`}

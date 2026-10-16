@@ -55,7 +55,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-12 pb-20 md:pt-16 md:pb-24 border-b border-white/5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] px-4 sm:px-6 lg:px-8 text-center relative z-10">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-semibold text-indigo-300 shadow-sm mb-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
@@ -119,7 +119,7 @@ export default function HomePage() {
 
       {/* Feature Architecture Highlights */}
       <section className="py-16 border-b border-slate-900 bg-slate-950/40">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-6 backdrop-blur-sm">
               <div className="h-10 w-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 border border-indigo-500/20">
@@ -166,7 +166,7 @@ export default function HomePage() {
 
       {/* Public Posts Feed Section */}
       <section id="feed" className="py-20 flex-1">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
@@ -241,7 +241,7 @@ export default function HomePage() {
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
               {posts.map((post: Post) => {
                 const authorId = getAuthorId(post.userId);
                 const authorName = getAuthorName(post.userId);
@@ -354,7 +354,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-slate-950 py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1600px] px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div className="flex items-center gap-2 font-medium text-slate-400">
             <ShieldCheck className="h-4 w-4 text-indigo-400" />
             <span>Secure Note-Taking & Posts App</span>

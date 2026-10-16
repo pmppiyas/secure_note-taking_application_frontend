@@ -53,12 +53,17 @@ export default function ProtectedRoute({
   // Loading state while checking authentication
   if (!isClientReady || !isAuthenticated || !token || !user) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-slate-300">
-        <Loader2 className="w-10 h-10 animate-spin text-indigo-500 mb-4" />
-        <p className="text-sm font-medium tracking-wide">
-          Verifying authorization...
-        </p>
-      </div>
+      <>
+        <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-slate-300">
+          <Loader2 className="w-10 h-10 animate-spin text-indigo-500 mb-4" />
+          <p className="text-sm font-medium tracking-wide">
+            Verifying authorization...
+          </p>
+        </div>
+        <div className="hidden" aria-hidden="true">
+          {children}
+        </div>
+      </>
     );
   }
 
@@ -69,15 +74,20 @@ export default function ProtectedRoute({
 
     if (!isAllowed) {
       return (
-        <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-4">
-            <ShieldAlert className="w-8 h-8" />
+        <>
+          <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-4">
+              <ShieldAlert className="w-8 h-8" />
+            </div>
+            <h2 className="text-xl font-bold text-white mb-2">Access Restricted</h2>
+            <p className="text-sm text-slate-400 max-w-md">
+              You do not have permission to view this resource. Redirecting to your assigned dashboard...
+            </p>
           </div>
-          <h2 className="text-xl font-bold text-white mb-2">Access Restricted</h2>
-          <p className="text-sm text-slate-400 max-w-md">
-            You do not have permission to view this resource. Redirecting to your assigned dashboard...
-          </p>
-        </div>
+          <div className="hidden" aria-hidden="true">
+            {children}
+          </div>
+        </>
       );
     }
   }

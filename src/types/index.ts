@@ -1,5 +1,13 @@
 export type UserRole = 'USER' | 'ADMIN';
 
+export interface NavItem {
+  id?: string;
+  title: string;
+  href: string;
+  iconName?: string;
+  badge?: string;
+}
+
 export interface User {
   _id: string;
   name: string;
@@ -55,4 +63,11 @@ export interface InterestsGroupResult {
 
 export interface UserWithPosts extends User {
   posts: Post[];
+}
+
+export interface NavItem {
+  title: string;
+  href: string;
+  iconName?: string;
+  badge?: string;
 }
