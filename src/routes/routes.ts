@@ -47,13 +47,19 @@ export const userRoutes: NavItem[] = [
     title: 'My Notes',
     href: '/dashboard/my-notes',
     iconName: 'FileText',
-    badge: 'Vault',
+    badge: 'Private',
   },
   {
-    title: 'Public Posts & $lookup',
+    title: 'My Posts',
+    href: '/dashboard/my-posts',
+    iconName: 'PenSquare',
+    badge: '$lookup',
+  },
+  {
+    title: 'Public Feed',
     href: '/dashboard/posts',
     iconName: 'Globe',
-    badge: 'Feed',
+    badge: 'All',
   },
 ];
 

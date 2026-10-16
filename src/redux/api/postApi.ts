@@ -1,14 +1,15 @@
 import { apiSlice } from './apiSlice';
-import { ApiResponse, Post, UserWithPosts } from '@/types';
+import {
+  ApiResponse,
+  Post,
+  UserWithPosts,
+  CreatePostPayload,
+  UpdatePostPayload,
+} from '@/types';
 
 export interface GetPostsQueryParams {
   page?: number;
   limit?: number;
-}
-
-export interface CreatePostPayload {
-  title: string;
-  body: string;
 }
 
 export const postApi = apiSlice.injectEndpoints({
@@ -35,13 +36,38 @@ export const postApi = apiSlice.injectEndpoints({
       providesTags: (_result, _error, userId) => [{ type: 'Post', id: `USER_${userId}` }],
     }),
 
+    getPostById: builder.query<ApiResponse<Post>, string>({
+      query: (id) => `/posts/${id}`,
+      providesTags: (_result, _error, id) => [{ type: 'Post', id }],
+    }),
+
     createPost: builder.mutation<ApiResponse<Post>, CreatePostPayload>({
       query: (payload) => ({
         url: '/posts',
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
+      invalidatesTags: ['Post', 'Metadata'],
+    }),
+
+    updatePost: builder.mutation<
+      ApiResponse<Post>,
+      { id: string; payload: UpdatePostPayload }
+    >({
+      query: ({ id, payload }) => ({
+        url: `/posts/${id}`,
+        method: 'PATCH',
+        body: payload,
+      }),
+      invalidatesTags: ['Post', 'Metadata'],
+    }),
+
+    deletePost: builder.mutation<ApiResponse<Post>, string>({
+      query: (id) => ({
+        url: `/posts/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Post', 'Metadata'],
     }),
   }),
 });
@@ -49,7 +75,10 @@ export const postApi = apiSlice.injectEndpoints({
 export const {
   useGetAllPostsQuery,
   useGetUserPostsLookupQuery,
+  useGetPostByIdQuery,
   useCreatePostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
 } = postApi;
 
 export default postApi;

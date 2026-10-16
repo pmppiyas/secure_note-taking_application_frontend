@@ -1,7 +1,9 @@
 'use client';
 
+import React from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import PageHeader from '@/components/shared/PageHeader';
+import { useGetDashboardMetadataQuery } from '@/redux/api/metadataApi';
 import {
   LayoutDashboard,
   FileText,
@@ -12,20 +14,37 @@ import {
   User as UserIcon,
   CheckCircle2,
   Sparkles,
+  PenSquare,
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function UserOverviewPage() {
   const { user } = useAppSelector((state) => state.auth);
 
+  // Fetch unified dashboard telemetry from dedicated /api/v1/metadata backend route
+  const { data: metadataResponse } = useGetDashboardMetadataQuery();
+  const metadata = metadataResponse?.data;
+
+  // 1. My Notes count
+  const myNotesCount = metadata?.myNotesCount ?? 0;
+
+  // 2. My Posts count
+  const myPostsCount = metadata?.myPostsCount ?? 0;
+
+  // 3. Total Posts in platform
+  const totalPostsCount = metadata?.totalPostsCount ?? 0;
+
+  // 4. Interests category count
+  const interestsCount = metadata?.interestsCount ?? (user?.interests?.length || 0);
+
   return (
     <div className="space-y-6">
       {/* Shared Compact Page Header */}
       <PageHeader
         icon={LayoutDashboard}
-        title="Vault Overview"
-        description="Personal encrypted telemetry, compound indexing, and account summary."
-        badge="Personal Vault"
+        title="Dashboard Overview"
+        description="Comprehensive telemetry across your private notes, published posts, and community discussions."
+        badge="Personal Space"
         badgeColor="indigo"
       >
         <Link
@@ -36,80 +55,104 @@ export default function UserOverviewPage() {
           <span>My Notes</span>
         </Link>
         <Link
+          href="/dashboard/my-posts"
+          className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-600 hover:bg-cyan-500 text-white shadow-md shadow-cyan-600/25 transition flex items-center gap-1.5"
+        >
+          <PenSquare className="w-3.5 h-3.5" />
+          <span>My Posts</span>
+        </Link>
+        <Link
           href="/dashboard/posts"
           className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-200 transition flex items-center gap-1.5"
         >
-          <Globe className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Public Posts</span>
+          <Globe className="w-3.5 h-3.5 text-emerald-400" />
+          <span>Public Feed</span>
         </Link>
       </PageHeader>
 
-      {/* KPI Metrics Cards */}
+      {/* KPI Metrics Cards: My Notes, My Posts, Total Posts, Interests Categories */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
+        {/* Card 1: My Notes */}
+        <Link
+          href="/dashboard/my-notes"
+          className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 hover:border-indigo-500/40 backdrop-blur-sm transition group"
+        >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">
-              Private Vault
+            <span className="text-xs font-medium text-slate-400 group-hover:text-indigo-300 transition">
+              My Notes
             </span>
-            <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 group-hover:scale-105 transition-transform">
               <FileText className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="mt-3">
-            <span className="text-2xl font-bold text-white tracking-tight">
-              Active
-            </span>
-            <p className="text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-medium">
-              <CheckCircle2 className="w-3 h-3" />
-              <span>Compound Indexed</span>
-            </p>
-          </div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">
-              Index Rule
-            </span>
-            <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-              <Database className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="mt-3">
-            <span className="text-sm font-bold font-mono text-cyan-300 tracking-tight">
-              {`{ userId: 1, createdAt: -1 }`}
-            </span>
-            <p className="text-[11px] text-slate-400 mt-1">
-              ESR compound performance
-            </p>
-          </div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">
-              Account Tier
-            </span>
-            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <Shield className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
             <span
               suppressHydrationWarning
-              className="text-2xl font-bold text-white tracking-tight uppercase"
+              className="text-2xl font-bold text-white tracking-tight"
             >
-              {user?.role || 'USER'}
+              {myNotesCount} {myNotesCount === 1 ? 'Note' : 'Notes'}
             </span>
-            <p
-              suppressHydrationWarning
-              className="text-[11px] text-slate-400 mt-1 truncate"
-            >
-              {user?.email}
+            <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
+              <span className="text-indigo-400 font-medium">Private Vault</span>
+              <span>• ESR Indexed</span>
             </p>
           </div>
-        </div>
+        </Link>
 
+        {/* Card 2: My Posts */}
+        <Link
+          href="/dashboard/my-posts"
+          className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 hover:border-cyan-500/40 backdrop-blur-sm transition group"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-400 group-hover:text-cyan-300 transition">
+              My Posts
+            </span>
+            <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover:scale-105 transition-transform">
+              <PenSquare className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <span
+              suppressHydrationWarning
+              className="text-2xl font-bold text-white tracking-tight"
+            >
+              {myPostsCount} {myPostsCount === 1 ? 'Post' : 'Posts'}
+            </span>
+            <p className="text-[11px] text-cyan-400 mt-1 flex items-center gap-1 font-medium">
+              <CheckCircle2 className="w-3 h-3" />
+              <span>$lookup Aggregated</span>
+            </p>
+          </div>
+        </Link>
+
+        {/* Card 3: Total Posts */}
+        <Link
+          href="/dashboard/posts"
+          className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 hover:border-emerald-500/40 backdrop-blur-sm transition group"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-slate-400 group-hover:text-emerald-300 transition">
+              Total Posts
+            </span>
+            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 group-hover:scale-105 transition-transform">
+              <Globe className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <span
+              suppressHydrationWarning
+              className="text-2xl font-bold text-white tracking-tight"
+            >
+              {totalPostsCount} {totalPostsCount === 1 ? 'Post' : 'Posts'}
+            </span>
+            <p className="text-[11px] text-slate-400 mt-1">
+              Global Community Feed
+            </p>
+          </div>
+        </Link>
+
+        {/* Card 4: Interests Category Count */}
         <div className="p-5 rounded-2xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-400">
@@ -120,11 +163,14 @@ export default function UserOverviewPage() {
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold text-white tracking-tight">
-              {user?.interests?.length || 0} Categories
+            <span
+              suppressHydrationWarning
+              className="text-2xl font-bold text-white tracking-tight"
+            >
+              {interestsCount} {interestsCount === 1 ? 'Category' : 'Categories'}
             </span>
             <p className="text-[11px] text-slate-400 mt-1">
-              Multikey indexed tags
+              Multikey Indexed • Scenario 1
             </p>
           </div>
         </div>
@@ -220,37 +266,35 @@ export default function UserOverviewPage() {
                 <FileText className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-white group-hover:text-indigo-300 transition">
-                Manage Private Notes
+                Private Vault (My Notes)
               </h3>
               <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                Access your private encrypted notes list with search filters and
-                ESR compound indexing.
+                Encrypted personal notes repository optimized with MongoDB compound index {'{ userId: 1, createdAt: -1 }'}.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-indigo-400">
-              <span>Open Vault Page</span>
+              <span>Open Private Vault ({myNotesCount})</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>
 
           <Link
-            href="/dashboard/posts"
+            href="/dashboard/my-posts"
             className="p-6 rounded-2xl bg-slate-900/40 border border-white/10 hover:border-cyan-500/40 transition group flex flex-col justify-between"
           >
             <div>
               <div className="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20 group-hover:scale-105 transition-transform">
-                <Globe className="w-5 h-5" />
+                <PenSquare className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition">
-                Community Posts & $lookup
+                My Public Posts ($lookup)
               </h3>
               <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                Explore relational foreign key joins uniting authors and
-                published posts.
+                Your published community posts joined live via MongoDB single aggregation pipeline $lookup stage.
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-cyan-400">
-              <span>View Feed Join Page</span>
+              <span>View My Posts ({myPostsCount})</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>

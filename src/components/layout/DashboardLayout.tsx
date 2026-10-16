@@ -22,6 +22,7 @@ import {
   X,
   User as UserIcon,
   Sparkles,
+  PenSquare,
 } from 'lucide-react';
 
 export interface DashboardLayoutProps {
@@ -38,6 +39,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   ShieldCheck,
   BarChart3,
   Home,
+  PenSquare,
 };
 
 const getIcon = (

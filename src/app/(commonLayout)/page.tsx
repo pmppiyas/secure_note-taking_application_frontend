@@ -31,7 +31,11 @@ export default function HomePage() {
 
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
-  const { data: postsResponse, isLoading, isFetching } = useGetAllPostsQuery({
+  const {
+    data: postsResponse,
+    isLoading,
+    isFetching,
+  } = useGetAllPostsQuery({
     page: currentPage,
     limit: 6,
   });
@@ -59,7 +63,9 @@ export default function HomePage() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-semibold text-indigo-300 shadow-sm mb-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-            <span>Service-Oriented Modular Architecture & MongoDB Aggregations</span>
+            <span>
+              Service-Oriented Modular Architecture & MongoDB Aggregations
+            </span>
           </div>
 
           {/* Heading */}
@@ -73,8 +79,8 @@ export default function HomePage() {
           {/* Subheading */}
           <p className="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
             A production-ready platform featuring JWT Role-Based Access Control,
-            compound ESR indexing, operational error handling, and high-performance
-            MongoDB aggregation pipelines.
+            compound ESR indexing, operational error handling, and
+            high-performance MongoDB aggregation pipelines.
           </p>
 
           {/* CTA Buttons */}
@@ -82,7 +88,7 @@ export default function HomePage() {
             {isAuthenticated ? (
               <>
                 <Link
-                  href="/notes"
+                  href="/dashboard/my-notes"
                   className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/30 hover:from-indigo-500 hover:to-indigo-400 transition transform hover:-translate-y-0.5"
                 >
                   <BookOpen className="h-4 w-4" />
@@ -125,9 +131,13 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 border border-indigo-500/20">
                 <Lock className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white mb-1.5">RBAC Security</h3>
+              <h3 className="text-base font-bold text-white mb-1.5">
+                RBAC Security
+              </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Strict JWT authentication with role authorization for both <code className="text-indigo-400">USER</code> and <code className="text-amber-400">ADMIN</code> tiers.
+                Strict JWT authentication with role authorization for both{' '}
+                <code className="text-indigo-400">USER</code> and{' '}
+                <code className="text-amber-400">ADMIN</code> tiers.
               </p>
             </div>
 
@@ -135,9 +145,15 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20">
                 <Layers className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white mb-1.5">ESR Compound Indexes</h3>
+              <h3 className="text-base font-bold text-white mb-1.5">
+                ESR Compound Indexes
+              </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Zero redundant indexes. Note queries are optimized by <code className="text-cyan-400">{"{ userId: 1, createdAt: -1 }"}</code> following ESR rules.
+                Zero redundant indexes. Note queries are optimized by{' '}
+                <code className="text-cyan-400">
+                  {'{ userId: 1, createdAt: -1 }'}
+                </code>{' '}
+                following ESR rules.
               </p>
             </div>
 
@@ -145,9 +161,14 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 border border-purple-500/20">
                 <Sparkles className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white mb-1.5">Scenario 1 Aggregation</h3>
+              <h3 className="text-base font-bold text-white mb-1.5">
+                Scenario 1 Aggregation
+              </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Single <code className="text-purple-400">$match</code>, <code className="text-purple-400">$unwind</code>, and <code className="text-purple-400">$group</code> query classifying users by interests.
+                Single <code className="text-purple-400">$match</code>,{' '}
+                <code className="text-purple-400">$unwind</code>, and{' '}
+                <code className="text-purple-400">$group</code> query
+                classifying users by interests.
               </p>
             </div>
 
@@ -155,9 +176,12 @@ export default function HomePage() {
               <div className="h-10 w-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 border border-emerald-500/20">
                 <Database className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-white mb-1.5">Scenario 2 ($lookup)</h3>
+              <h3 className="text-base font-bold text-white mb-1.5">
+                Scenario 2 ($lookup)
+              </h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Joins users and their published posts in one aggregation pipeline with indexed foreign keys.
+                Joins users and their published posts in one aggregation
+                pipeline with indexed foreign keys.
               </p>
             </div>
           </div>
@@ -178,7 +202,8 @@ export default function HomePage() {
                 Public Community Feed
               </h2>
               <p className="text-sm text-slate-400 mt-1">
-                Public posts sorted newest first with pagination and author aggregation inspection.
+                Public posts sorted newest first with pagination and author
+                aggregation inspection.
               </p>
             </div>
 
@@ -219,7 +244,9 @@ export default function HomePage() {
           ) : posts.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/20 p-12 text-center">
               <Database className="h-10 w-10 text-slate-600 mx-auto mb-3" />
-              <h3 className="text-base font-bold text-slate-200">No public posts yet</h3>
+              <h3 className="text-base font-bold text-slate-200">
+                No public posts yet
+              </h3>
               <p className="text-xs text-slate-400 mt-1 mb-5">
                 Be the first to publish a post to the community feed.
               </p>
@@ -255,7 +282,9 @@ export default function HomePage() {
                       {/* Author Header */}
                       <div className="flex items-center justify-between gap-2 mb-4">
                         <button
-                          onClick={() => authorId && setSelectedUserId(authorId)}
+                          onClick={() =>
+                            authorId && setSelectedUserId(authorId)
+                          }
                           disabled={!authorId}
                           className="flex items-center gap-2.5 text-left group transition hover:opacity-90"
                         >
@@ -268,16 +297,21 @@ export default function HomePage() {
                             </span>
                             <span className="text-[10px] text-slate-500 flex items-center gap-1">
                               <Clock className="h-2.5 w-2.5" />
-                              {new Date(post.createdAt).toLocaleDateString(undefined, {
-                                month: 'short',
-                                day: 'numeric',
-                              })}
+                              {new Date(post.createdAt).toLocaleDateString(
+                                undefined,
+                                {
+                                  month: 'short',
+                                  day: 'numeric',
+                                }
+                              )}
                             </span>
                           </div>
                         </button>
 
                         <button
-                          onClick={() => authorId && setSelectedUserId(authorId)}
+                          onClick={() =>
+                            authorId && setSelectedUserId(authorId)
+                          }
                           disabled={!authorId}
                           title="View all posts by this user via $lookup"
                           className="flex items-center gap-1 text-[11px] font-medium text-indigo-400 hover:text-indigo-300 rounded-md border border-indigo-500/20 bg-indigo-500/10 px-2 py-1 transition"
@@ -318,13 +352,16 @@ export default function HomePage() {
           {meta && meta.totalPages > 1 && (
             <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-900 pt-6">
               <span className="text-xs text-slate-400">
-                Showing Page <strong className="text-white">{meta.page}</strong> of{' '}
-                <strong className="text-white">{meta.totalPages}</strong> ({meta.total} total posts)
+                Showing Page <strong className="text-white">{meta.page}</strong>{' '}
+                of <strong className="text-white">{meta.totalPages}</strong> (
+                {meta.total} total posts)
               </span>
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage <= 1 || isFetching}
                   className="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-slate-800 disabled:opacity-40 disabled:pointer-events-none transition"
                 >
@@ -338,7 +375,9 @@ export default function HomePage() {
 
                 <button
                   onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, meta.totalPages))
+                    setCurrentPage((prev) =>
+                      Math.min(prev + 1, meta.totalPages)
+                    )
                   }
                   disabled={currentPage >= meta.totalPages || isFetching}
                   className="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-slate-800 disabled:opacity-40 disabled:pointer-events-none transition"
